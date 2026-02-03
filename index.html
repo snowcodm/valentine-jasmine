@@ -2,11 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>For My Baby ❤️🥀 </title>
+  <title>My Baby❤️🥀</title>
+
   <style>
     body {
       margin: 0;
       height: 100vh;
+      overflow: hidden;
       background: radial-gradient(circle at top, #1a1a1a, #000000);
       color: #ffffff;
       font-family: 'Segoe UI', Arial, sans-serif;
@@ -17,19 +19,20 @@
     }
 
     .card {
+      position: relative;
+      z-index: 2;
       background: rgba(255, 255, 255, 0.06);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
       padding: 45px 40px;
       border-radius: 24px;
       max-width: 420px;
-      box-shadow: 0 0 40px rgba(255, 0, 0, 0.08);
+      box-shadow: 0 0 40px rgba(230, 57, 70, 0.15);
       animation: fadeIn 1.6s ease;
     }
 
     h1 {
       font-size: 2.4em;
       margin-bottom: 12px;
-      letter-spacing: 1px;
     }
 
     h1 span {
@@ -57,25 +60,58 @@
       color: #ffffff;
       font-size: 16px;
       cursor: pointer;
-      box-shadow: 0 8px 25px rgba(230, 57, 70, 0.35);
+      box-shadow: 0 8px 25px rgba(230, 57, 70, 0.4);
       transition: all 0.3s ease;
     }
 
     button:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 30px rgba(230, 57, 70, 0.55);
+      box-shadow: 0 12px 30px rgba(230, 57, 70, 0.65);
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      bottom: -20px;
+      font-size: 18px;
+      color: rgba(230, 57, 70, 0.7);
+      animation: floatUp linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-110vh) scale(1.4);
+        opacity: 0;
+      }
     }
 
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(12px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    .music-note {
+      margin-top: 14px;
+      font-size: 0.9em;
+      opacity: 0.7;
+    }
   </style>
 </head>
 <body>
 
+  <!-- Background Music -->
+  <audio id="bgMusic" loop>
+
+    <source src="https://open.spotify.com/track/5ht0zFXsezKxVvu8eMiewq?si=b692cc6c45004f0e.mp3" type="audio/mpeg">
+  </audio>
+
   <div class="card" id="card">
-    <h1>Baby <span>❤️🥀 </span></h1>
+    <h1>Jasmine <span>🖤</span></h1>
 
     <p>
       In a world that moves too fast,<br>
@@ -92,10 +128,18 @@
     </p>
 
     <button onclick="yesClicked()">Yes, my love ❤️</button>
+
+    <div class="music-note">
+      (tap to start the vibe 🎵)
+    </div>
   </div>
 
   <script>
+    const music = document.getElementById("bgMusic");
+
     function yesClicked() {
+      music.play();
+
       document.getElementById("card").innerHTML = `
         <h1>It’s Always You <span>❤️</span></h1>
 
@@ -110,10 +154,26 @@
         </p>
 
         <p style="margin-top:24px; font-size:1.1em;">
-          Happy Valentine’s Day in advance, my love ❤️🥀 
+          Happy Valentine's Day in advance, my love ❤️🥀
         </p>
       `;
     }
+
+    // Floating hearts generator
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerHTML = "❤️";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.animationDuration = (6 + Math.random() * 4) + "s";
+      document.body.appendChild(heart);
+
+      setTimeout(() => {
+        heart.remove();
+      }, 10000);
+    }
+
+    setInterval(createHeart, 500);
   </script>
 
 </body>
